@@ -15,7 +15,7 @@ export default function MapsSection() {
         height="800"
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
-        className="w-full h-auto aspect-[6/2]"
+        className="w-full h-auto md:aspect-[6/2] aspect-video"
       ></iframe>
     </section>
   );
