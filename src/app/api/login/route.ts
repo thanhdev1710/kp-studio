@@ -9,9 +9,10 @@ export async function POST(req: NextRequest) {
 
     (await cookies()).set("token", token, {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
       path: "/",
       sameSite: "lax",
+      domain: ".kpstudio.vn",
     });
 
     return NextResponse.json({ success: true });
