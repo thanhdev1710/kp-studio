@@ -12,7 +12,8 @@ export async function POST(req: NextRequest) {
       secure: process.env.NODE_ENV === "production",
       path: "/",
       sameSite: "lax",
-      domain: ".kpstudio.vn",
+      domain:
+        process.env.NODE_ENV === "production" ? ".kpstudio.vn" : undefined,
     });
 
     return NextResponse.json({ success: true });
