@@ -71,7 +71,7 @@ export const ContactSection = () => {
                 </div>
                 <div>
                   <h3 className="text-gray-800 font-medium mb-1">Email</h3>
-                  <p className="text-gray-600">kpstudio@gmail.com</p>
+                  <p className="text-gray-600">kpstudio2496@gmail.com</p>
                 </div>
               </div>
               <div className="flex items-start space-x-4">
@@ -95,7 +95,7 @@ export const ContactSection = () => {
                   <h3 className="text-gray-800 font-medium mb-1">
                     Số điện thoại
                   </h3>
-                  <p className="text-gray-600">(123) 456-7890</p>
+                  <p className="text-gray-600">0327865275 - 0908048982</p>
                 </div>
               </div>
               <div className="flex items-start space-x-4">
@@ -124,7 +124,7 @@ export const ContactSection = () => {
                 <div>
                   <h3 className="text-gray-800 font-medium mb-1">Địa chỉ</h3>
                   <p className="text-gray-600">
-                    140 Đ. Lê Trọng Tấn, Tây Thạnh, Tân Phú
+                    23/14 Khiếu Năng Tĩnh, Phường An Lạc A, Quận Bình Tân
                     <br />
                     Hồ Chí Minh, Việt Nam
                   </p>

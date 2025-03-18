@@ -18,8 +18,8 @@ export default function Navbar({
   const listNav = [
     { title: "Trang chủ", link: "/" },
     { title: "Giới thiệu", link: "/gioi-thieu" },
-    { title: "Album hình cưới", link: "/album-cuoi" },
-    { title: "Váy cưới", link: "/vay-cuoi" },
+    { title: "Wedding", link: "/wedding" },
+    { title: "Event", link: "/event" },
     { title: "Tin tức", link: "/tin-tuc" },
     { title: "Liên hệ", link: "/lien-he" },
     { title: "Dịch vụ", link: "/dich-vu" },

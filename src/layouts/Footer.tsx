@@ -122,7 +122,7 @@ export function Footer() {
                   ></path>
                 </svg>
                 <span className="text-gray-600 font-light text-sm">
-                  140 Đ. Lê Trọng Tấn, Tây Thạnh, Tân Phú
+                  23/14 Khiếu Năng Tĩnh, Phường An Lạc A, Quận Bình Tân
                   <br />
                   Hồ Chí Minh, Việt Nam
                 </span>
@@ -143,7 +143,7 @@ export function Footer() {
                   ></path>
                 </svg>
                 <span className="text-gray-600 font-light text-sm">
-                  KPStudio@gmail.com
+                  kpstudio2496@gmail.com
                 </span>
               </li>
               <li className="flex items-start">
@@ -162,7 +162,7 @@ export function Footer() {
                   ></path>
                 </svg>
                 <span className="text-gray-600 font-light text-sm">
-                  (123) 456-7890
+                  0327865275 - 0908048982
                 </span>
               </li>
             </ul>
@@ -170,7 +170,7 @@ export function Footer() {
         </div>
         <div className="border-t border-gray-200 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-500 text-sm mb-4 md:mb-0">
-            © {new Date().getFullYear()} <strong>KPStudio</strong> . Tất cả
+            © {new Date().getFullYear()} <strong>KP Studio</strong> . Tất cả
             quyền được bảo lưu.
           </p>
           <div className="flex space-x-6">
