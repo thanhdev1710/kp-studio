@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     siteName: "KP Studio",
     images: [
       {
-        url: "https://kpstudio.vn/banner.jpg",
+        url: "https://kpstudio.vn/icon.jpeg",
         width: 1200,
         height: 630,
         alt: "KP Studio – Chụp Ảnh Cưới Nghệ Thuật",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     title: "KP Studio | Chụp Ảnh Cưới Nghệ Thuật",
     description:
       "KP Studio – Studio chụp ảnh cưới chuyên nghiệp. Lưu giữ khoảnh khắc hạnh phúc của bạn với đội ngũ photographer tài năng.",
-    images: ["https://kpstudio.vn/banner.jpg"],
+    images: ["https://kpstudio.vn/icon.jpeg"],
   },
 };
 

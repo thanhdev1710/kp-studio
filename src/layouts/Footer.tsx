@@ -181,10 +181,10 @@ export function Footer() {
               Chính sách bảo mật
             </a>
             <a
-              href="/dieu-khoan-dich-vu"
+              href="/dieu-khoan-su-dung"
               className="text-gray-500 hover:text-pink-300 transition-colors duration-300 text-sm"
             >
-              Điều khoản dịch vụ
+              Điều khoản sử dụng
             </a>
           </div>
         </div>
