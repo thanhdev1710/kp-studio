@@ -1,12 +1,9 @@
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   const url = new URL("/login", req.url);
-
-  const response = NextResponse.redirect(url);
-
-  // Xóa cookie bằng header
-  response.cookies.set("token", "", {
+  (await cookies()).set("token", "", {
     path: "/",
     maxAge: 0,
     httpOnly: true,
@@ -14,6 +11,5 @@ export async function GET(req: NextRequest) {
     domain: process.env.NODE_ENV === "production" ? ".kpstudio.vn" : undefined,
     sameSite: "lax",
   });
-
-  return response;
+  return NextResponse.redirect(url);
 }

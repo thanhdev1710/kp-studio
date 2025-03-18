@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { cookies } from "next/headers";
 
 export async function POST(req: NextRequest) {
   const { username, password } = await req.json();
@@ -6,9 +7,7 @@ export async function POST(req: NextRequest) {
   if (username === process.env.USERNAME && password === process.env.PASSWORD) {
     const token = Buffer.from(`${username}:${Date.now()}`).toString("base64");
 
-    const response = NextResponse.json({ success: true });
-
-    response.cookies.set("token", token, {
+    (await cookies()).set("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       path: "/",
@@ -17,7 +16,7 @@ export async function POST(req: NextRequest) {
         process.env.NODE_ENV === "production" ? ".kpstudio.vn" : undefined,
     });
 
-    return response;
+    return NextResponse.json({ success: true });
   }
 
   return NextResponse.json({
