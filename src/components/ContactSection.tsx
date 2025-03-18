@@ -39,7 +39,7 @@ export const ContactSection = () => {
   };
   return (
     <section id="contact" className="py-20 md:py-28 bg-white">
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="containerCustom">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div>
             <h2 className="fontPlayfairDisplay text-3xl md:text-4xl text-gray-800 mb-6">

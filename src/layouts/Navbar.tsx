@@ -1,18 +1,24 @@
 "use client";
-import { listNav } from "@/constants/base";
 import { X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Dispatch, SetStateAction } from "react";
 
 export default function Navbar({
+  listNav,
   isMenu,
   setIsMenu,
   isScrolled,
+  pathnameLevel,
 }: {
+  listNav: {
+    title: string;
+    link: string;
+  }[];
   isMenu: boolean;
   isScrolled: boolean;
   setIsMenu: Dispatch<SetStateAction<boolean>>;
+  pathnameLevel: number;
 }) {
   const pathname = usePathname();
 
@@ -27,7 +33,9 @@ export default function Navbar({
       >
         <ul className="flex items-center justify-center">
           {listNav.map((item) => {
-            const isActive = pathname.split("/")[1] == item.link.split("/")[1];
+            const isActive =
+              pathname.split("/")[pathnameLevel] ===
+              item.link.split("/")[pathnameLevel];
             return (
               <li key={item.title}>
                 <Link
@@ -55,7 +63,9 @@ export default function Navbar({
         </div>
         <ul className="flex flex-col mt-10">
           {listNav.map((item) => {
-            const isActive = pathname.split("/")[1] == item.link.split("/")[1];
+            const isActive =
+              pathname.split("/")[pathnameLevel] ===
+              item.link.split("/")[pathnameLevel];
             return (
               <li key={item.title}>
                 <Link

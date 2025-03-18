@@ -1,9 +1,10 @@
 "use client";
 import { TabType } from "@/app/(root)/wedding/page";
+import { blur } from "@/constants/base";
 import { Eye, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function PhotoGallery({
   tabs,
@@ -15,17 +16,9 @@ export default function PhotoGallery({
   photos: string[];
 }) {
   const [imgPreview, setImgPreview] = useState<string | null>(null);
-  const [animation, setAnimation] = useState(false);
-
-  useEffect(() => {
-    setAnimation(true);
-    const timer = setTimeout(() => setAnimation(false), 300);
-
-    return () => clearTimeout(timer);
-  }, [type]);
 
   return (
-    <div className="container mx-auto p-6 fontMontserrat">
+    <div className="containerCustom fontMontserrat">
       {/* Tabs */}
       <div className="flex justify-center space-x-8 mb-8 border-b border-gray-300 pb-4">
         {tabs.map((tab) => (
@@ -52,11 +45,7 @@ export default function PhotoGallery({
           <div
             key={index}
             onClick={() => setImgPreview(src)}
-            className={`overflow-hidden relative cursor-pointer group transition-all duration-300 ${
-              animation
-                ? "opacity-0 translate-y-4"
-                : "opacity-100 translate-y-0"
-            }`}
+            className={`overflow-hidden relative cursor-pointer group transition-all duration-300`}
           >
             <Image
               width={500}
@@ -64,6 +53,9 @@ export default function PhotoGallery({
               src={src}
               alt={`Ảnh ${type} ${index + 1}`}
               className="w-full h-auto aspect-[3/2] object-cover"
+              loading="lazy"
+              placeholder="blur"
+              blurDataURL={blur}
             />
             <div className="absolute opacity-0 group-hover:opacity-100 duration-500 transition-all flex left-0 top-0 w-full h-full bg-black/80 items-center justify-center gap-2 text-white font-black">
               <Eye />
@@ -75,12 +67,12 @@ export default function PhotoGallery({
 
       <div
         onClick={() => setImgPreview(null)}
-        className={`w-full fixed top-0 z-[60] left-0 h-svh bg-black/60 transition-all duration-500 ${
+        className={`w-full fixed top-0 z-[60] left-0 h-screen bg-black/60 transition-all duration-500 ${
           imgPreview ? "left-0" : "left-full select-none"
         }`}
       >
         {imgPreview && (
-          <div className="h-[60svh] w-auto absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <div className="md:h-[60vh] md:w-auto w-[80%] h-auto absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
             <Image
               onClick={(e) => e.stopPropagation()}
               width={900}

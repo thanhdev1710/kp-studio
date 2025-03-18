@@ -37,7 +37,7 @@ export default function VideoSection() {
           </div>
         </div>
       </div>
-      <div className="container mx-auto px-4 md:px-6 py-6">
+      <div className="containerCustom py-6">
         <div className="grid lg:grid-cols-3 grid-cols-1 gap-6 p-3 bg-gray-100">
           <div className="w-full">
             <iframe

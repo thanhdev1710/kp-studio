@@ -6,7 +6,7 @@ export default function StepPhotoSection() {
     "Nhận file ảnh đã chỉnh sửa & duyệt in album để nhận sản phẩm cuối cùng.",
   ];
   return (
-    <section className="container mx-auto px-4 md:px-6 py-12">
+    <section className="containerCustom py-12">
       <h3 className="fontPlayfairDisplay lg:text-4xl text-2xl text-center text-gray-800">
         Chụp ảnh cưới tại KPStudio như thế nào ?
       </h3>

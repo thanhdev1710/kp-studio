@@ -4,7 +4,16 @@ import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
 import { MenuIcon } from "lucide-react";
 
-export default function Header() {
+export default function Header({
+  listNav,
+  pathnameLevel,
+}: {
+  listNav: {
+    title: string;
+    link: string;
+  }[];
+  pathnameLevel: number;
+}) {
   const [isMenu, setIsMenu] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   useEffect(() => {
@@ -26,7 +35,13 @@ export default function Header() {
         <MenuIcon onClick={() => setIsMenu(true)} className="lg:hidden" />
       </div>
       <hr />
-      <Navbar isScrolled={isScrolled} isMenu={isMenu} setIsMenu={setIsMenu} />
+      <Navbar
+        pathnameLevel={pathnameLevel}
+        listNav={listNav}
+        isScrolled={isScrolled}
+        isMenu={isMenu}
+        setIsMenu={setIsMenu}
+      />
     </header>
   );
 }

@@ -6,11 +6,13 @@ export default function MapsSection() {
           KPStudio Maps
         </h3>
         <p className="text-center fontPlayfairDisplay font-medium text-lg">
-          140 Đ. Lê Trọng Tấn, Tây Thạnh, Tân Phú <br /> Hồ Chí Minh, Việt Nam
+          23/14 Khiếu Năng Tĩnh, Phường An Lạc A, Quận Bình Tân
+          <br />
+          Hồ Chí Minh, Việt Nam
         </p>
       </div>
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.0679105736444!2d106.6261100758646!3d10.806110789344464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752bd5df1e62a7%3A0x46c017eda11fa0e5!2zSFVJVCAtIMSQ4bqhaSBo4buNYyBDw7RuZyBUaMawxqFuZyBUUC5IQ00gKEPGoSBz4bufIGNow61uaCk!5e0!3m2!1svi!2s!4v1742188280587!5m2!1svi!2s"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d431.00182314223525!2d106.62220025437696!3d10.75287971983777!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752d0fa7cccdfd%3A0x58d27821699d2075!2zMjMgS2hp4bq_dSBOxINuZyBUxKluaCwgQW4gTOG6oWMgQSwgQsOsbmggVMOibiwgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1742276675707!5m2!1svi!2s"
         width="1920"
         height="800"
         loading="lazy"

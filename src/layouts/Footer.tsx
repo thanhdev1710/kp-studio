@@ -1,10 +1,16 @@
 import Logo from "@/components/Logo";
-import { listNav } from "@/constants/base";
 
-export function Footer() {
+export function Footer({
+  listNav,
+}: {
+  listNav: {
+    title: string;
+    link: string;
+  }[];
+}) {
   return (
     <footer className="bg-gray-50 py-16 fontMontserrat">
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="containerCustom">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-2">
             <Logo />
