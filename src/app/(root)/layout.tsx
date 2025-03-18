@@ -4,9 +4,9 @@ import React, { ReactNode } from "react";
 
 export default function layout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="bg-white">
       <Header />
-      <main>{children}</main>
+      <main className="min-h-screen h-full">{children}</main>
       <Footer />
     </div>
   );
