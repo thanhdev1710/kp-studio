@@ -3,7 +3,7 @@
 
 import { revalidateTag } from "next/cache";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+const apiUrl = process.env.API_URL;
 const apiKey = process.env.API_KEY;
 
 export async function InsertWedding(formData: FormData) {

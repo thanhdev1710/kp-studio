@@ -1,6 +1,6 @@
 import { ListWedding } from "@/types/wedding";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+const apiUrl = process.env.API_URL;
 const apiKey = process.env.API_KEY;
 
 export const getWeddingByType = async (type: string): Promise<ListWedding> => {
