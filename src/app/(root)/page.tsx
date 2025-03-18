@@ -1,10 +1,10 @@
-import AlbumSection from "@/components/AlbumSection";
-import { ContactSection } from "@/components/ContactSection";
-import HeroSection from "@/components/HeroSection";
-import MapsSection from "@/components/MapsSection";
-import PhotoPackageSection from "@/components/PhotoPackageSection";
-import StepPhotoSection from "@/components/StepPhotoSection";
-import VideoSection from "@/components/VideoSection";
+import AlbumSection from "@/components/Section/AlbumSection";
+import { ContactSection } from "@/components/Section/ContactSection";
+import HeroSection from "@/components/Section/HeroSection";
+import MapsSection from "@/components/Section/MapsSection";
+import PhotoPackageSection from "@/components/Section/PhotoPackageSection";
+import StepPhotoSection from "@/components/Section/StepPhotoSection";
+import VideoSection from "@/components/Section/VideoSection";
 import { blur } from "@/constants/base";
 import { Metadata } from "next";
 import React from "react";

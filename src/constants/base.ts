@@ -1,3 +1,5 @@
+import { TabType } from "@/types/wedding";
+
 export const listNavRoot = [
   { title: "Trang chủ", link: "/" },
   { title: "Giới thiệu", link: "/gioi-thieu" },
@@ -12,7 +14,10 @@ export const listNavAdmin = [
   { title: "Admin", link: "/admin" },
   { title: "Wedding", link: "/admin/wedding" },
   { title: "Event", link: "/admin/event" },
+  { title: "Logout", link: "/api/logout", action: true },
 ];
 
 export const blur =
   "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDUwMCAzMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjUwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiNiYmJiYmIiLz48L3N2Zz4=";
+
+export const tabs: TabType[] = ["all", "studio", "phimtruong", "ngoaicanh"];

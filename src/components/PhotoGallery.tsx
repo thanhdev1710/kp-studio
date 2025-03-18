@@ -1,95 +1,100 @@
 "use client";
-import { TabType } from "@/app/(root)/wedding/page";
-import { blur } from "@/constants/base";
-import { Eye, X } from "lucide-react";
+import { DeleteWedding } from "@/actions/wedding";
+import { Wedding } from "@/types/wedding";
+import { Eye, Trash, X } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 
 export default function PhotoGallery({
-  tabs,
-  type,
   photos,
+  children,
+  isPreview = true,
+  isDelete = false,
 }: {
-  tabs: TabType[];
-  type: TabType;
-  photos: string[];
+  photos: Wedding[];
+  children?: ReactNode;
+  isPreview?: boolean;
+  isDelete?: boolean;
 }) {
   const [imgPreview, setImgPreview] = useState<string | null>(null);
+  const [loadingDelete, setLoadingDelete] = useState(false);
 
   return (
-    <div className="containerCustom fontMontserrat">
-      {/* Tabs */}
-      <div className="flex justify-center space-x-8 mb-8 border-b border-gray-300 pb-4">
-        {tabs.map((tab) => (
-          <Link
-            href={`/wedding?type=${tab}`}
-            key={tab}
-            className={`relative md:px-6 md:py-2 px-3 py-1 md:text-lg text-sm font-medium tracking-wide transition-all duration-300 ${
-              type === tab
-                ? "text-black after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[2px] after:bg-black"
-                : "text-gray-500 hover:text-black"
-            }`}
-          >
-            {tab === "studio"
-              ? "Studio"
-              : tab === "phimtruong"
-              ? "Phim Trường"
-              : "Ngoại Cảnh"}
-          </Link>
-        ))}
-      </div>
-
+    <>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-3">
-        {photos.map((src, index) => (
+        {children}
+        {photos.map((item, index) => (
           <div
             key={index}
-            onClick={() => setImgPreview(src)}
+            onClick={() => setImgPreview(item.image_url)}
             className={`overflow-hidden relative cursor-pointer group transition-all duration-300`}
           >
             <Image
               width={500}
               height={500}
-              src={src}
-              alt={`Ảnh ${type} ${index + 1}`}
+              src={item.image_url}
+              alt={`Ảnh ${item.name}`}
               className="w-full h-auto aspect-[3/2] object-cover"
               loading="lazy"
               placeholder="blur"
-              blurDataURL={blur}
+              blurDataURL={item.blur_data}
             />
-            <div className="absolute opacity-0 group-hover:opacity-100 duration-500 transition-all flex left-0 top-0 w-full h-full bg-black/80 items-center justify-center gap-2 text-white font-black">
-              <Eye />
-              <p>Preview</p>
-            </div>
+            {isPreview && (
+              <div className="absolute opacity-0 group-hover:opacity-100 duration-500 transition-all flex left-0 top-0 w-full h-full bg-black/80 items-center justify-center gap-2 text-white font-black">
+                <Eye />
+                <p>Preview</p>
+              </div>
+            )}
+            {isDelete && (
+              <div
+                onClick={async () => {
+                  setLoadingDelete(true);
+                  await DeleteWedding(item.id);
+                  setLoadingDelete(false);
+                }}
+                className="absolute opacity-0 group-hover:opacity-100 duration-500 transition-all flex left-0 top-0 w-full h-full bg-black/80 items-center justify-center gap-2 text-white font-black"
+              >
+                {loadingDelete ? (
+                  <p>Đang thực hiện xoá ảnh...</p>
+                ) : (
+                  <>
+                    <Trash />
+                    <p>Delete</p>
+                  </>
+                )}
+              </div>
+            )}
           </div>
         ))}
       </div>
 
-      <div
-        onClick={() => setImgPreview(null)}
-        className={`w-full fixed top-0 z-[60] left-0 h-screen bg-black/60 transition-all duration-500 ${
-          imgPreview ? "left-0" : "left-full select-none"
-        }`}
-      >
-        {imgPreview && (
-          <div className="md:h-[60vh] md:w-auto w-[80%] h-auto absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <Image
-              onClick={(e) => e.stopPropagation()}
-              width={900}
-              height={900}
-              alt={`Ảnh ${type} ${imgPreview}`}
-              priority
-              src={imgPreview || ""}
-            />
-            <button
-              onClick={() => setImgPreview(null)}
-              className="absolute cursor-pointer -top-5 -right-5 bg-black text-white p-2 rounded-full"
-            >
-              <X size={26} />
-            </button>
-          </div>
-        )}
-      </div>
-    </div>
+      {isPreview && (
+        <div
+          onClick={() => setImgPreview(null)}
+          className={`w-full fixed top-0 z-[60] left-0 h-screen bg-black/60 transition-all duration-500 ${
+            imgPreview ? "left-0" : "left-full select-none"
+          }`}
+        >
+          {imgPreview && (
+            <div className="md:h-[60vh] md:w-auto w-[80%] h-auto absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+              <Image
+                onClick={(e) => e.stopPropagation()}
+                width={900}
+                height={900}
+                alt={`Ảnh ${imgPreview}`}
+                priority
+                src={imgPreview || ""}
+              />
+              <button
+                onClick={() => setImgPreview(null)}
+                className="absolute cursor-pointer -top-5 -right-5 bg-black text-white p-2 rounded-full"
+              >
+                <X size={26} />
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+    </>
   );
 }

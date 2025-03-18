@@ -14,6 +14,7 @@ export default function Navbar({
   listNav: {
     title: string;
     link: string;
+    action?: boolean;
   }[];
   isMenu: boolean;
   isScrolled: boolean;
@@ -40,9 +41,11 @@ export default function Navbar({
               <li key={item.title}>
                 <Link
                   className={`inline-block transition-all duration-300 py-6 px-6 fontMontserrat hover:bg-gray-800 hover:text-gray-200 ${
-                    isActive
-                      ? "bg-gray-800 text-gray-200 font-bold"
-                      : "font-medium"
+                    !item.action
+                      ? isActive
+                        ? "bg-gray-800 text-gray-200 font-bold"
+                        : "font-medium"
+                      : "bg-yellow-400 text-gray-600 font-bold hover:bg-yellow-300 hover:text-gray-500"
                   }`}
                   href={item.link}
                 >
@@ -69,8 +72,12 @@ export default function Navbar({
             return (
               <li key={item.title}>
                 <Link
-                  className={`inline-block py-6 px-6 w-full fontMontserrat  hover:bg-gray-800 hover:text-gray-200 ${
-                    isActive ? "bg-gray-600 font-bold" : "font-medium"
+                  className={`inline-block py-6 px-6 w-full fontMontserrat  hover:bg-gray-600 text-gray-200 ${
+                    !item.action
+                      ? isActive
+                        ? "bg-gray-600 font-bold"
+                        : "font-medium"
+                      : "bg-yellow-400 text-gray-600 font-bold hover:bg-yellow-300 hover:text-gray-500"
                   }`}
                   href={item.link}
                 >
