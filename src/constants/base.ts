@@ -14,7 +14,7 @@ export const listNavAdmin = [
   { title: "Admin", link: "/admin" },
   { title: "Wedding", link: "/admin/wedding" },
   { title: "Event", link: "/admin/event" },
-  { title: "Logout", link: "/api/logout", action: true },
+  { title: "Logout", link: "/api/logout" },
 ];
 
 export const blur =
