@@ -1,15 +1,7 @@
 import Logo from "@/components/Logo";
+import { listNav } from "@/constants/base";
 
 export function Footer() {
-  const listNav = [
-    { title: "Trang chủ", link: "/" },
-    { title: "Giới thiệu", link: "/gioi-thieu" },
-    { title: "Album hình cưới", link: "/album-cuoi" },
-    { title: "Váy cưới", link: "/vay-cuoi" },
-    { title: "Tin tức", link: "/tin-tuc" },
-    { title: "Liên hệ", link: "/lien-he" },
-    { title: "Dịch vụ", link: "/dich-vu" },
-  ];
   return (
     <footer className="bg-gray-50 py-16 fontMontserrat">
       <div className="container mx-auto px-4 md:px-6">

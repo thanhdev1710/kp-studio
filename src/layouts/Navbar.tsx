@@ -1,4 +1,5 @@
 "use client";
+import { listNav } from "@/constants/base";
 import { X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -14,16 +15,6 @@ export default function Navbar({
   setIsMenu: Dispatch<SetStateAction<boolean>>;
 }) {
   const pathname = usePathname();
-
-  const listNav = [
-    { title: "Trang chủ", link: "/" },
-    { title: "Giới thiệu", link: "/gioi-thieu" },
-    { title: "Wedding", link: "/wedding" },
-    { title: "Event", link: "/event" },
-    { title: "Tin tức", link: "/tin-tuc" },
-    { title: "Liên hệ", link: "/lien-he" },
-    { title: "Dịch vụ", link: "/dich-vu" },
-  ];
 
   return (
     <>
