@@ -19,6 +19,29 @@ export const metadata: Metadata = {
   },
   description:
     "KP Studio – Studio chụp ảnh cưới chuyên nghiệp, phong cách hiện đại. Lưu giữ khoảnh khắc hạnh phúc cùng đội ngũ photographer tài năng. Đặt lịch ngay hôm nay!",
+  keywords: [
+    "chụp ảnh cưới",
+    "studio ảnh cưới",
+    "nhiếp ảnh cưới",
+    "dịch vụ chụp ảnh cưới",
+    "ảnh cưới nghệ thuật",
+    "chụp hình cưới chuyên nghiệp",
+    "địa điểm chụp ảnh cưới đẹp",
+    "KP Studio",
+    "ảnh cưới ngoại cảnh",
+    "album ảnh cưới đẹp",
+  ],
+  authors: [
+    {
+      name: "ThanhDev",
+      url: "https://thanhdev.io.vn",
+    },
+    {
+      name: "KP Studio",
+      url: "https://kpstudio.vn",
+    },
+  ],
+  robots: "index, follow",
   openGraph: {
     title:
       "KP Studio | Chụp Ảnh Cưới Nghệ Thuật – Lưu Giữ Khoảnh Khắc Đẹp Nhất",
@@ -28,9 +51,9 @@ export const metadata: Metadata = {
     siteName: "KP Studio",
     images: [
       {
-        url: "https://kpstudio.vn/icon.jpeg",
-        width: 1200,
-        height: 630,
+        url: "https://kpstudio.vn/images/banner-kpstudio.jpeg",
+        width: 1920,
+        height: 1080,
         alt: "KP Studio – Chụp Ảnh Cưới Nghệ Thuật",
       },
     ],
@@ -42,7 +65,8 @@ export const metadata: Metadata = {
     title: "KP Studio | Chụp Ảnh Cưới Nghệ Thuật",
     description:
       "KP Studio – Studio chụp ảnh cưới chuyên nghiệp. Lưu giữ khoảnh khắc hạnh phúc của bạn với đội ngũ photographer tài năng.",
-    images: ["https://kpstudio.vn/icon.jpeg"],
+    images: ["https://kpstudio.vn/images/banner-kpstudio.jpeg"],
+    creator: "@kpstudio", // Nếu có tài khoản Twitter của studio
   },
 };
 
