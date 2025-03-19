@@ -6,7 +6,7 @@ export default function Logo() {
     <Link href="/" className="fontPlayfairDisplay flex gap-2 items-center">
       <Image
         alt="KP Studio"
-        src="/images/icon-512x512.jpeg"
+        src="/images/icon-512x512.png"
         width={100}
         height={100}
         className="size-[62px]"
