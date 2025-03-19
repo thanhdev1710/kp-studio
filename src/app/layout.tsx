@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Montserrat } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
 const geistPlayfair_Display = Playfair_Display({
@@ -81,6 +82,7 @@ export default function RootLayout({
         className={`${geistPlayfair_Display.variable} ${geistMontserrat.variable} antialiased`}
       >
         {children}
+        <Analytics />
       </body>
     </html>
   );

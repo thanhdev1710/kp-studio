@@ -102,7 +102,7 @@ export default function Navbar({
                         headers: { "Content-Type": "application/json" },
                       });
                       if (response.ok) {
-                        window.location.href = "/login";
+                        router.push("/login");
                       }
                     }}
                   >
