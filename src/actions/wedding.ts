@@ -11,11 +11,20 @@ export async function InsertWedding(formData: FormData) {
     throw new Error("API URL hoặc API Key bị thiếu.");
   }
 
+  const payload = {
+    name: formData.get("name"),
+    type: formData.get("type"),
+    imageUrls: JSON.parse(formData.get("imageUrls") as string),
+  };
+
   try {
     const res = await fetch(`${apiUrl}wedding`, {
       method: "POST",
-      body: formData,
-      headers: { "x-api-key": apiKey },
+      body: JSON.stringify(payload), // Gửi JSON thay vì FormData
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+      },
     });
 
     const result = await res.json();
@@ -28,7 +37,7 @@ export async function InsertWedding(formData: FormData) {
       data: result,
     };
   } catch (error: any) {
-    console.error("Lỗi gửi FormData:", error);
+    console.error("Lỗi gửi JSON:", error);
     return {
       status: "error",
       error: error.message || error.toString(),

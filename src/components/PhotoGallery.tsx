@@ -77,7 +77,7 @@ export default function PhotoGallery({
           }`}
         >
           {imgPreview && (
-            <div className="md:h-[60vh] md:w-auto w-[80%] h-auto absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="max-w-[80%] max-h-[80%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               <Image
                 onClick={(e) => e.stopPropagation()}
                 width={900}

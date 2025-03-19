@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
         hostname: "unpocxzsussyvmnipuhr.supabase.co",
         protocol: "https",
         port: "",
-        pathname: "/storage/v1/object/public/images/*",
+        pathname: "/storage/v1/object/public/images/**",
       },
     ],
   },

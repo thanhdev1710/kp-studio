@@ -3,12 +3,74 @@
 import { useState } from "react";
 import { PlusIcon, X } from "lucide-react";
 import { InsertWedding } from "@/actions/wedding";
+import imageCompression, { Options } from "browser-image-compression";
+import { supabase } from "@/lib/db";
 
 export default function ButtonAndForm() {
   const [openForm, setOpenForm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+
+  // Xử lý chọn ảnh
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const files = Array.from(e.target.files);
+
+      if (files.length > 50) {
+        alert("Bạn chỉ có thể tải lên tối đa 50 ảnh!");
+        return;
+      }
+
+      setSelectedFiles(files);
+    }
+  };
+
+  // Nén ảnh trước khi upload
+  const compressImage = async (file: File) => {
+    const options: Options = {
+      maxSizeMB: 1, // Giới hạn tối đa 1MB
+      maxWidthOrHeight: 800, // Resize về 800px
+      useWebWorker: true, // Tăng tốc quá trình nén
+    };
+    try {
+      return await imageCompression(file, options);
+    } catch (error) {
+      console.error("Lỗi nén ảnh:", error);
+      return file; // Nếu lỗi, trả về file gốc
+    }
+  };
+
+  // Upload ảnh đã nén lên Supabase
+  const uploadImagesToSupabase = async (
+    files: File[],
+    name: string,
+    type: string
+  ) => {
+    const uploadedUrls: string[] = [];
+
+    for (const file of files) {
+      const compressedFile = await compressImage(file);
+      const fileName = `wedding/${type}/${name}-${Date.now()}-${
+        compressedFile.name
+      }`;
+
+      const { error } = await supabase.storage
+        .from(process.env.NEXT_PUBLIC_SUPABASE_BUCKET!)
+        .upload(fileName, compressedFile, { contentType: compressedFile.type });
+
+      if (error) {
+        console.error("Lỗi upload:", error.message);
+        return null;
+      }
+
+      const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${process.env.NEXT_PUBLIC_SUPABASE_BUCKET}/${fileName}`;
+      uploadedUrls.push(url);
+    }
+
+    return uploadedUrls;
+  };
 
   return (
     <div>
@@ -47,21 +109,41 @@ export default function ButtonAndForm() {
             {/* Form */}
             <form
               onSubmit={async (event) => {
-                event.preventDefault(); // Ngăn form reload trang
+                event.preventDefault();
                 setLoading(true);
                 setError(null);
                 setSuccess(false);
-
                 const formData = new FormData(event.currentTarget);
-                const result = await InsertWedding(formData);
 
+                // Upload ảnh đã nén lên Supabase
+                const imageUrls = await uploadImagesToSupabase(
+                  selectedFiles,
+                  formData.get("name")?.toString() || "",
+                  formData.get("type")?.toString() || ""
+                );
+
+                if (!imageUrls) {
+                  setError("Lỗi upload ảnh!");
+                  setLoading(false);
+                  return;
+                }
+
+                formData.append("imageUrls", JSON.stringify(imageUrls));
+
+                const result = await InsertWedding(formData);
                 setLoading(false);
 
                 if (result.status === "error") {
                   setError(result.error);
                 } else {
                   setSuccess(true);
-                  setTimeout(() => setOpenForm(false), 1500);
+
+                  setTimeout(() => {
+                    setOpenForm(false);
+                    setSelectedFiles([]);
+                    event.currentTarget.reset();
+                    setSuccess(false);
+                  }, 1500);
                 }
               }}
               className="space-y-4"
@@ -73,8 +155,9 @@ export default function ButtonAndForm() {
                 </label>
                 <input
                   type="file"
-                  name="file"
                   accept="image/*"
+                  multiple
+                  onChange={handleFileChange}
                   className="mt-1 block w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border file:border-gray-300 file:text-gray-700 hover:file:bg-gray-100"
                   required
                 />
