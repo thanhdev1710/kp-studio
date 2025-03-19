@@ -25,19 +25,20 @@ export default function PhotoGallery({
         {children}
         {photos.map((item, index) => (
           <div
-            key={index}
+            key={item.name + index}
             onClick={() => setImgPreview(item.image_url)}
-            className={`overflow-hidden relative cursor-pointer group transition-all duration-300`}
+            className={`w-full h-auto aspect-[3/2] object-cover overflow-hidden relative cursor-pointer group transition-all duration-300`}
           >
             <Image
-              width={500}
-              height={500}
               src={item.image_url}
               alt={`Ảnh ${item.name}`}
-              className="w-full h-auto aspect-[3/2] object-cover"
-              loading="lazy"
+              className="object-cover"
+              loading={index < 4 ? "eager" : "lazy"}
+              priority={index < 4}
               placeholder="blur"
+              quality={80}
               blurDataURL={item.blur_data}
+              fill
             />
             {isPreview && (
               <div className="absolute opacity-0 group-hover:opacity-100 duration-500 transition-all flex left-0 top-0 w-full h-full bg-black/80 items-center justify-center gap-2 text-white font-black">
@@ -82,7 +83,7 @@ export default function PhotoGallery({
                 width={900}
                 height={900}
                 alt={`Ảnh ${imgPreview}`}
-                priority
+                quality={100}
                 src={imgPreview || ""}
               />
               <button

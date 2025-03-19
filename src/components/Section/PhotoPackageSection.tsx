@@ -16,7 +16,7 @@ export default function PhotoPackageSection() {
   return (
     <section className="bg-gray-100 text-gray-900 py-12">
       <div className="containerCustom">
-        <h3 className="fontPlayfairDisplay uppercase text-xl text-gray-400 md:text-3xl text-center font-semibold mb-8">
+        <h3 className="fontPlayfairDisplay uppercase text-xl text-gray-600 md:text-3xl text-center font-semibold mb-8">
           Gói chụp ảnh cưới
         </h3>
         <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-8">

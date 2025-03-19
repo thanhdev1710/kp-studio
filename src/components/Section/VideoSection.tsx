@@ -19,7 +19,7 @@ export default function VideoSection() {
             ></iframe>
           </div>
           <div className="flex flex-col items-center justify-start w-full">
-            <h3 className="fontPlayfairDisplay uppercase text-xl text-gray-400 md:text-3xl text-center font-semibold mb-2">
+            <h3 className="fontPlayfairDisplay uppercase text-xl text-gray-600 md:text-3xl text-center font-semibold mb-2">
               VIDEO WEDDING
             </h3>
             <div className="w-full h-0.5 bg-gray-200" />
