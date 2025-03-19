@@ -77,3 +77,7 @@ export async function DeleteWedding(id: number) {
     revalidateTag("wedding");
   }
 }
+
+export async function ReloadWedding() {
+  revalidateTag("wedding");
+}
