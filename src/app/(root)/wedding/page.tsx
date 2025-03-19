@@ -1,5 +1,5 @@
 import ErrorComponent from "@/components/ErrorComponent";
-import PhotoGallery from "@/components/PhotoGallery";
+import PhotoGallery from "@/components/PhotoGallery/PhotoGallery";
 import { PhotoGallerySkeleton } from "@/components/Skeleton/PhotoGallerySkeleton";
 import Tabs from "@/components/Tabs";
 import { tabs } from "@/constants/base";

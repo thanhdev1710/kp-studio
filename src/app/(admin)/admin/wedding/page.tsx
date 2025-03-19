@@ -1,4 +1,4 @@
-import PhotoGallery from "@/components/PhotoGallery";
+import PhotoGallery from "@/components/PhotoGallery/PhotoGallery";
 import { PhotoGallerySkeleton } from "@/components/Skeleton/PhotoGallerySkeleton";
 import { getWeddingByType } from "@/services/wedding";
 import { TabType } from "@/types/wedding";
