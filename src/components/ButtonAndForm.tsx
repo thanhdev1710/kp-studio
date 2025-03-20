@@ -76,24 +76,24 @@ export default function ButtonAndForm({
         return;
       }
 
-      const compressedFiles: File[] = [];
-      for (const file of files) {
-        const options = {
-          maxSizeMB: 1, // Giữ ảnh dưới 1MB
-          maxWidthOrHeight: 1500, // Giới hạn kích thước ảnh
-          useWebWorker: true,
-        };
+      try {
+        const compressedFiles = await Promise.all(
+          files.map(async (file) => {
+            const options = {
+              maxSizeMB: 1, // Giữ ảnh dưới 1MB
+              maxWidthOrHeight: 1500, // Giới hạn kích thước ảnh
+              useWebWorker: true,
+            };
 
-        try {
-          const compressedFile = await imageCompression(file, options);
-          const webpFile = await convertToWebP(compressedFile, 0.7); // Giảm chất lượng
-          compressedFiles.push(webpFile);
-        } catch (error) {
-          console.error("Lỗi nén hoặc chuyển đổi sang WebP:", error);
-        }
+            const compressedFile = await imageCompression(file, options);
+            return convertToWebP(compressedFile, 0.7); // Giảm chất lượng
+          })
+        );
+
+        setSelectedFiles(compressedFiles);
+      } catch (error) {
+        console.error("Lỗi nén hoặc chuyển đổi sang WebP:", error);
       }
-
-      setSelectedFiles(compressedFiles);
     }
   };
 
@@ -102,24 +102,31 @@ export default function ButtonAndForm({
     name: string,
     type: string
   ) => {
-    const uploadedUrls: string[] = [];
+    try {
+      const uploads = await Promise.all(
+        files.map(async (file) => {
+          const fileName = `${typePage}/${type}/${name}-${Date.now()}-${
+            file.name
+          }`;
 
-    for (const file of files) {
-      const fileName = `${typePage}/${type}/${name}-${Date.now()}-${file.name}`;
+          const { error } = await supabase.storage
+            .from(process.env.NEXT_PUBLIC_SUPABASE_BUCKET!)
+            .upload(fileName, file, { contentType: file.type });
 
-      const { error } = await supabase.storage
-        .from(process.env.NEXT_PUBLIC_SUPABASE_BUCKET!)
-        .upload(fileName, file, { contentType: file.type });
+          if (error) {
+            console.error("Lỗi upload:", error.message);
+            return null; // Trả về null nếu upload thất bại
+          }
 
-      if (error) {
-        console.error("Lỗi upload:", error.message);
-        return null;
-      }
+          return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${process.env.NEXT_PUBLIC_SUPABASE_BUCKET}/${fileName}`;
+        })
+      );
 
-      const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${process.env.NEXT_PUBLIC_SUPABASE_BUCKET}/${fileName}`;
-      uploadedUrls.push(url);
+      return uploads.filter((url) => url !== null); // Loại bỏ các upload thất bại
+    } catch (error) {
+      console.error("Lỗi trong quá trình upload:", error);
+      return [];
     }
-    return uploadedUrls;
   };
 
   return (
