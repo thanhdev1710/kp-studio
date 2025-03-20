@@ -11,4 +11,4 @@ export interface Wedding {
   blur_data: string;
 }
 
-export type TabType = "studio" | "phimtruong" | "ngoaicanh" | "all";
+export type TabType = "studio" | "phimtruong" | "ngoaicanh" | "events" | "all";

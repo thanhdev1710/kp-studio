@@ -4,22 +4,84 @@ import { useState } from "react";
 import { PlusIcon, X } from "lucide-react";
 import { InsertWedding } from "@/actions/wedding";
 import { supabase } from "@/lib/db";
+import imageCompression from "browser-image-compression";
 
-export default function ButtonAndForm() {
+export default function ButtonAndForm({
+  typePage,
+}: {
+  typePage: "wedding" | "events";
+}) {
   const [openForm, setOpenForm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  async function convertToWebP(file: File): Promise<File> {
+    return new Promise<File>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target?.result as string;
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+          if (!ctx) return reject("Canvas không được hỗ trợ");
+
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0, img.width, img.height);
+
+          canvas.toBlob(
+            (blob) => {
+              if (blob) {
+                resolve(
+                  new File(
+                    [blob],
+                    file.name.replace(/\.(jpg|jpeg|png)$/i, ".webp"),
+                    {
+                      type: "image/webp",
+                    }
+                  )
+                );
+              } else {
+                reject("Không thể tạo blob từ ảnh");
+              }
+            },
+            "image/webp",
+            0.8
+          );
+        };
+      };
+    });
+  }
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const files = Array.from(e.target.files);
       if (files.length > 50) {
         alert("Bạn chỉ có thể tải lên tối đa 50 ảnh!");
         return;
       }
-      setSelectedFiles(files);
+
+      const compressedFiles: File[] = [];
+      for (const file of files) {
+        const options = {
+          maxWidthOrHeight: 1500,
+          useWebWorker: true,
+        };
+
+        try {
+          const compressedFile = await imageCompression(file, options);
+          const webpFile = await convertToWebP(compressedFile);
+          compressedFiles.push(webpFile);
+        } catch (error) {
+          console.error("Lỗi nén hoặc chuyển đổi sang WebP:", error);
+        }
+      }
+
+      setSelectedFiles(compressedFiles);
     }
   };
 
@@ -31,7 +93,7 @@ export default function ButtonAndForm() {
     const uploadedUrls: string[] = [];
 
     for (const file of files) {
-      const fileName = `wedding/${type}/${name}-${Date.now()}-${file.name}`;
+      const fileName = `${typePage}/${type}/${name}-${Date.now()}-${file.name}`;
 
       const { error } = await supabase.storage
         .from(process.env.NEXT_PUBLIC_SUPABASE_BUCKET!)
@@ -110,7 +172,6 @@ export default function ButtonAndForm() {
                   setTimeout(() => {
                     setOpenForm(false);
                     setSelectedFiles([]);
-                    event.currentTarget.reset();
                     setSuccess(false);
                   }, 1500);
                 }
@@ -123,7 +184,7 @@ export default function ButtonAndForm() {
                 </label>
                 <input
                   type="file"
-                  accept="image/*"
+                  accept="image/png, image/jpeg, image/jpg"
                   multiple
                   onChange={handleFileChange}
                   className="mt-1 block w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border file:border-gray-300 file:text-gray-700 hover:file:bg-gray-100"
@@ -144,20 +205,23 @@ export default function ButtonAndForm() {
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Loại
-                </label>
-                <select
-                  name="type"
-                  className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-black focus:ring-black"
-                >
-                  <option value="studio">Studio</option>
-                  <option value="phimtruong">Phim Trường</option>
-                  <option value="ngoaicanh">Ngoại Cảnh</option>
-                </select>
-              </div>
-
+              {typePage === "wedding" ? (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Loại
+                  </label>
+                  <select
+                    name="type"
+                    className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-black focus:ring-black"
+                  >
+                    <option value="studio">Studio</option>
+                    <option value="phimtruong">Phim Trường</option>
+                    <option value="ngoaicanh">Ngoại Cảnh</option>
+                  </select>
+                </div>
+              ) : (
+                <input type="hidden" name="type" value="events" />
+              )}
               {error && <p className="text-red-500 text-sm">{error}</p>}
               {success && (
                 <p className="text-green-500 text-sm">Tải lên thành công!</p>

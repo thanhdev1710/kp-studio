@@ -4,7 +4,7 @@ export const listNavRoot = [
   { title: "Trang chủ", link: "/" },
   { title: "Giới thiệu", link: "/gioi-thieu" },
   { title: "Wedding", link: "/wedding" },
-  { title: "Event", link: "/event" },
+  { title: "Events", link: "/events" },
   { title: "Tin tức", link: "/tin-tuc" },
   { title: "Liên hệ", link: "/lien-he" },
   { title: "Dịch vụ", link: "/dich-vu" },
@@ -13,7 +13,7 @@ export const listNavRoot = [
 export const listNavAdmin = [
   { title: "Admin", link: "/admin" },
   { title: "Wedding", link: "/admin/wedding" },
-  { title: "Event", link: "/admin/event" },
+  { title: "Events", link: "/admin/events" },
   { title: "Logout", link: "/api/logout" },
 ];
 

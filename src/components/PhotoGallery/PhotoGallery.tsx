@@ -1,20 +1,17 @@
 "use client";
+import { DeleteWedding } from "@/actions/wedding";
 import { Wedding } from "@/types/wedding";
 import { Eye, Trash } from "lucide-react";
-import Image from "next/image";
+import { Image } from "antd";
 import { ReactNode, useState } from "react";
-import { DeleteWedding } from "@/actions/wedding";
-import Link from "next/link";
 
 export default function PhotoGallery({
   photos,
   children,
-  isPreview = true,
   isDelete = false,
 }: {
   photos: Wedding[];
   children?: ReactNode;
-  isPreview?: boolean;
   isDelete?: boolean;
 }) {
   const [loadingDelete, setLoadingDelete] = useState(false);
@@ -26,40 +23,25 @@ export default function PhotoGallery({
         {photos.map((item, index) => (
           <div
             key={item.name + index}
-            className="w-full h-auto aspect-[3/2] object-cover overflow-hidden relative cursor-pointer group transition-all duration-300"
+            className="relative group transition-all duration-300 w-full h-auto aspect-[3/2] overflow-hidden"
           >
             <Image
               src={item.image_url}
               alt={`Ảnh ${item.name}`}
-              className="object-cover"
-              loading={index < 4 ? "eager" : "lazy"}
-              priority={index < 4}
-              placeholder="blur"
-              quality={80}
-              blurDataURL={item.blur_data}
-              fill
-              sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-              layout="fill"
+              placeholder={true}
+              preview={{ mask: <Eye /> }}
+              width="100%"
+              height="100%"
+              style={{ objectFit: "cover" }}
             />
-            {isPreview && (
-              <Link
-                href={item.image_url}
-                target="_blank"
-                className="absolute opacity-0 group-hover:opacity-100 duration-500 transition-all flex left-0 top-0 w-full h-full bg-black/80 items-center justify-center gap-2 text-white font-black"
-              >
-                <Eye />
-                <p>View</p>
-              </Link>
-            )}
             {isDelete && (
               <div
-                onClick={async (e) => {
-                  e.stopPropagation(); // Ngăn mở link khi ấn vào nút xóa
+                onClick={async () => {
                   setLoadingDelete(true);
                   await DeleteWedding(item.id);
                   setLoadingDelete(false);
                 }}
-                className="absolute opacity-0 group-hover:opacity-100 duration-500 transition-all flex left-0 top-0 w-full h-full bg-black/80 items-center justify-center gap-2 text-white font-black"
+                className="absolute opacity-0 group-hover:opacity-100 duration-500 transition-all flex left-0 top-0 w-full h-full bg-black/80 items-center justify-center gap-2 text-white font-black cursor-pointer"
               >
                 {loadingDelete ? (
                   <p>Đang xoá...</p>
