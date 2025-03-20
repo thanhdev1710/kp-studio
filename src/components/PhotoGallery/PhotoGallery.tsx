@@ -1,8 +1,8 @@
 "use client";
 import { DeleteWedding } from "@/actions/wedding";
 import { Wedding } from "@/types/wedding";
-import { Eye, Trash } from "lucide-react";
-import { Image } from "antd";
+import { Trash } from "lucide-react";
+import Image from "next/image";
 import { ReactNode, useState } from "react";
 
 export default function PhotoGallery({
@@ -28,11 +28,11 @@ export default function PhotoGallery({
             <Image
               src={item.image_url}
               alt={`Ảnh ${item.name}`}
-              placeholder={true}
-              preview={{ mask: <Eye /> }}
-              width="100%"
-              height="100%"
-              style={{ objectFit: "cover" }}
+              width={300}
+              height={300}
+              placeholder="blur"
+              blurDataURL={item.blur_data}
+              loading="lazy"
             />
             {isDelete && (
               <div
