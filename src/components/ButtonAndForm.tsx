@@ -17,7 +17,11 @@ export default function ButtonAndForm({
   const [success, setSuccess] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
-  async function convertToWebP(file: File): Promise<File> {
+  async function convertToWebP(
+    file: File,
+    quality = 0.7,
+    maxSize = 1500
+  ): Promise<File> {
     return new Promise<File>((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -29,10 +33,19 @@ export default function ButtonAndForm({
           const ctx = canvas.getContext("2d");
           if (!ctx) return reject("Canvas không được hỗ trợ");
 
-          canvas.width = img.width;
-          canvas.height = img.height;
-          ctx.drawImage(img, 0, 0, img.width, img.height);
+          // Tính toán kích thước ảnh để không vượt quá maxSize
+          let { width, height } = img;
+          if (width > maxSize || height > maxSize) {
+            const scaleFactor = Math.min(maxSize / width, maxSize / height);
+            width = Math.round(width * scaleFactor);
+            height = Math.round(height * scaleFactor);
+          }
 
+          canvas.width = width;
+          canvas.height = height;
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Chuyển sang WebP với chất lượng tối ưu
           canvas.toBlob(
             (blob) => {
               if (blob) {
@@ -40,9 +53,7 @@ export default function ButtonAndForm({
                   new File(
                     [blob],
                     file.name.replace(/\.(jpg|jpeg|png)$/i, ".webp"),
-                    {
-                      type: "image/webp",
-                    }
+                    { type: "image/webp" }
                   )
                 );
               } else {
@@ -50,7 +61,7 @@ export default function ButtonAndForm({
               }
             },
             "image/webp",
-            0.8
+            quality // Giảm chất lượng xuống mức phù hợp
           );
         };
       };
@@ -68,13 +79,14 @@ export default function ButtonAndForm({
       const compressedFiles: File[] = [];
       for (const file of files) {
         const options = {
-          maxWidthOrHeight: 1500,
+          maxSizeMB: 1, // Giữ ảnh dưới 1MB
+          maxWidthOrHeight: 1500, // Giới hạn kích thước ảnh
           useWebWorker: true,
         };
 
         try {
           const compressedFile = await imageCompression(file, options);
-          const webpFile = await convertToWebP(compressedFile);
+          const webpFile = await convertToWebP(compressedFile, 0.7); // Giảm chất lượng
           compressedFiles.push(webpFile);
         } catch (error) {
           console.error("Lỗi nén hoặc chuyển đổi sang WebP:", error);
