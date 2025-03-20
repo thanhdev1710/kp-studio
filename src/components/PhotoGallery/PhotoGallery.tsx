@@ -44,7 +44,11 @@ export default function PhotoGallery({
                 await DeleteWedding(item.id);
                 setLoadingDelete(null);
               }}
-              className="absolute top-2 right-2 bg-red-600 text-white p-2 rounded-full shadow-md transition-all"
+              className={`absolute top-2 right-2 bg-red-600 text-white p-2 rounded-full shadow-md transition-all ${
+                loadingDelete === item.id
+                  ? "cursor-not-allowed"
+                  : "hover:bg-red-700 cursor-pointer"
+              }`}
               disabled={loadingDelete === item.id}
             >
               {loadingDelete === item.id ? "..." : <Trash size={18} />}
