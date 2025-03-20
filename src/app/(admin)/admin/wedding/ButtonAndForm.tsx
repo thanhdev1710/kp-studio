@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { PlusIcon, X } from "lucide-react";
 import { InsertWedding } from "@/actions/wedding";
-import imageCompression, { Options } from "browser-image-compression";
 import { supabase } from "@/lib/db";
 
 export default function ButtonAndForm() {
@@ -13,36 +12,17 @@ export default function ButtonAndForm() {
   const [success, setSuccess] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
-  // Xử lý chọn ảnh
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const files = Array.from(e.target.files);
-
       if (files.length > 50) {
         alert("Bạn chỉ có thể tải lên tối đa 50 ảnh!");
         return;
       }
-
       setSelectedFiles(files);
     }
   };
 
-  // Nén ảnh trước khi upload
-  const compressImage = async (file: File) => {
-    const options: Options = {
-      maxSizeMB: 1, // Giới hạn tối đa 1MB
-      maxWidthOrHeight: 800, // Resize về 800px
-      useWebWorker: true, // Tăng tốc quá trình nén
-    };
-    try {
-      return await imageCompression(file, options);
-    } catch (error) {
-      console.error("Lỗi nén ảnh:", error);
-      return file; // Nếu lỗi, trả về file gốc
-    }
-  };
-
-  // Upload ảnh đã nén lên Supabase
   const uploadImagesToSupabase = async (
     files: File[],
     name: string,
@@ -51,14 +31,11 @@ export default function ButtonAndForm() {
     const uploadedUrls: string[] = [];
 
     for (const file of files) {
-      const compressedFile = await compressImage(file);
-      const fileName = `wedding/${type}/${name}-${Date.now()}-${
-        compressedFile.name
-      }`;
+      const fileName = `wedding/${type}/${name}-${Date.now()}-${file.name}`;
 
       const { error } = await supabase.storage
         .from(process.env.NEXT_PUBLIC_SUPABASE_BUCKET!)
-        .upload(fileName, compressedFile, { contentType: compressedFile.type });
+        .upload(fileName, file, { contentType: file.type });
 
       if (error) {
         console.error("Lỗi upload:", error.message);
@@ -68,13 +45,11 @@ export default function ButtonAndForm() {
       const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${process.env.NEXT_PUBLIC_SUPABASE_BUCKET}/${fileName}`;
       uploadedUrls.push(url);
     }
-
     return uploadedUrls;
   };
 
   return (
     <div>
-      {/* Nút mở form */}
       <div
         onClick={() => setOpenForm(true)}
         className="group hover:bg-gray-300 transition-all w-full h-auto aspect-[3/2] cursor-pointer bg-gray-200 flex items-center justify-center"
@@ -85,7 +60,6 @@ export default function ButtonAndForm() {
         />
       </div>
 
-      {/* Modal form */}
       {openForm && (
         <div
           onClick={() => setOpenForm(false)}
@@ -95,7 +69,6 @@ export default function ButtonAndForm() {
             onClick={(e) => e.stopPropagation()}
             className="bg-white p-6 rounded-lg shadow-lg w-[90%] max-w-md"
           >
-            {/* Header */}
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold">Thêm ảnh</h2>
               <button
@@ -106,7 +79,6 @@ export default function ButtonAndForm() {
               </button>
             </div>
 
-            {/* Form */}
             <form
               onSubmit={async (event) => {
                 event.preventDefault();
@@ -115,7 +87,6 @@ export default function ButtonAndForm() {
                 setSuccess(false);
                 const formData = new FormData(event.currentTarget);
 
-                // Upload ảnh đã nén lên Supabase
                 const imageUrls = await uploadImagesToSupabase(
                   selectedFiles,
                   formData.get("name")?.toString() || "",
@@ -129,7 +100,6 @@ export default function ButtonAndForm() {
                 }
 
                 formData.append("imageUrls", JSON.stringify(imageUrls));
-
                 const result = await InsertWedding(formData);
                 setLoading(false);
 
@@ -137,7 +107,6 @@ export default function ButtonAndForm() {
                   setError(result.error);
                 } else {
                   setSuccess(true);
-
                   setTimeout(() => {
                     setOpenForm(false);
                     setSelectedFiles([]);
@@ -148,7 +117,6 @@ export default function ButtonAndForm() {
               }}
               className="space-y-4"
             >
-              {/* File Upload */}
               <div>
                 <label className="block text-sm font-medium text-gray-700">
                   Chọn ảnh
@@ -163,7 +131,6 @@ export default function ButtonAndForm() {
                 />
               </div>
 
-              {/* Tên */}
               <div>
                 <label className="block text-sm font-medium text-gray-700">
                   Tên
@@ -177,7 +144,6 @@ export default function ButtonAndForm() {
                 />
               </div>
 
-              {/* Loại */}
               <div>
                 <label className="block text-sm font-medium text-gray-700">
                   Loại
@@ -192,15 +158,11 @@ export default function ButtonAndForm() {
                 </select>
               </div>
 
-              {/* Thông báo lỗi */}
               {error && <p className="text-red-500 text-sm">{error}</p>}
-
-              {/* Thông báo thành công */}
               {success && (
                 <p className="text-green-500 text-sm">Tải lên thành công!</p>
               )}
 
-              {/* Nút Submit */}
               <button
                 type="submit"
                 className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition flex items-center justify-center"
