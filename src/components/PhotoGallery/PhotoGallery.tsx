@@ -33,6 +33,7 @@ export default function PhotoGallery({
               placeholder="blur"
               blurDataURL={item.blur_data}
               loading="lazy"
+              className="w-full h-auto object-cover"
             />
             {isDelete && (
               <div
