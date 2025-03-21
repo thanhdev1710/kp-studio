@@ -76,14 +76,30 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body
-        className={`${geistPlayfair_Display.variable} ${geistMontserrat.variable} antialiased`}
-      >
-        {children}
-        <Analytics />
-      </body>
-    </html>
-  );
+  const isShow = process.env.isShow === "true";
+  if (!isShow) {
+    return (
+      <html lang="en">
+        <body
+          className={`${geistPlayfair_Display.variable} ${geistMontserrat.variable} antialiased`}
+        >
+          <div className="w-full h-screen flex justify-center items-center">
+            <h1 className="text-4xl font-bold text-red-500">Error</h1>
+          </div>
+          <Analytics />
+        </body>
+      </html>
+    );
+  } else {
+    return (
+      <html lang="en">
+        <body
+          className={`${geistPlayfair_Display.variable} ${geistMontserrat.variable} antialiased`}
+        >
+          {children}
+          <Analytics />
+        </body>
+      </html>
+    );
+  }
 }

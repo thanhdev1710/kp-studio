@@ -1,6 +1,6 @@
-// import LoginForm from "@/components/LoginForm";
+import LoginForm from "@/components/LoginForm";
 import { cookies } from "next/headers";
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
 export default async function page() {
   const token =
@@ -9,5 +9,5 @@ export default async function page() {
   if (token) {
     return redirect("/admin");
   }
-  return notFound();
+  return <LoginForm />;
 }
