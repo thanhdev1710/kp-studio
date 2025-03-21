@@ -1,19 +1,20 @@
-import { listNavAdmin } from "@/constants/base";
-import Header from "@/layouts/Header";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import React, { ReactNode } from "react";
+import { notFound, redirect } from "next/navigation";
+// import { ReactNode } from "react";
 
-export default async function layout({ children }: { children: ReactNode }) {
+// { children }: { children: ReactNode }
+export default async function layout() {
   const token =
     (await cookies()).get("token")?.value === process.env.TOKEN_LOGIN;
   if (!token) {
     return redirect("/login");
   }
-  return (
-    <div className="bg-white">
-      <Header pathnameLevel={2} listNav={listNavAdmin} />
-      <main className="min-h-screen h-full">{children}</main>
-    </div>
-  );
+  // return (
+  //   <div className="bg-white">
+  //     <Header pathnameLevel={2} listNav={listNavAdmin} />
+  //     <main className="min-h-screen h-full">{children}</main>
+  //   </div>
+  // );
+
+  return notFound();
 }
