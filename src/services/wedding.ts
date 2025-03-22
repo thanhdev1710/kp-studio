@@ -3,17 +3,20 @@ import { ListWedding } from "@/types/wedding";
 const apiUrl = process.env.API_URL;
 const apiKey = process.env.API_KEY;
 
-export const getWeddingByType = async (type: string): Promise<ListWedding> => {
+export const getWeddingByType = async (
+  type: string,
+  typePage: string
+): Promise<ListWedding> => {
   try {
     if (!apiUrl || !apiKey) {
       throw new Error("API URL or API Key is missing.");
     }
-    const res = await fetch(`${apiUrl}wedding?type=${type}`, {
+    const res = await fetch(`${apiUrl}images/${typePage}?type=${type}`, {
       headers: {
         "x-api-key": apiKey,
       },
       cache: "force-cache",
-      next: { tags: ["wedding"] },
+      next: { tags: ["img"] },
     });
 
     if (!res.ok) {

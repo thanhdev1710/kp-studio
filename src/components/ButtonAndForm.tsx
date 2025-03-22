@@ -5,11 +5,15 @@ import { PlusIcon, X } from "lucide-react";
 import { InsertWedding } from "@/actions/wedding";
 import { supabase } from "@/lib/db";
 import imageCompression from "browser-image-compression";
+import { convertToWebP } from "@/lib/utils";
+import { ListTab } from "@/types/wedding";
 
 export default function ButtonAndForm({
   typePage,
+  listTab,
 }: {
   typePage: "wedding" | "events";
+  listTab: ListTab;
 }) {
   const [openForm, setOpenForm] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -17,56 +21,21 @@ export default function ButtonAndForm({
   const [success, setSuccess] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
-  async function convertToWebP(
-    file: File,
-    quality = 0.7,
-    maxSize = 1500
-  ): Promise<File> {
-    return new Promise<File>((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (event) => {
-        const img = new Image();
-        img.src = event.target?.result as string;
-        img.onload = () => {
-          const canvas = document.createElement("canvas");
-          const ctx = canvas.getContext("2d");
-          if (!ctx) return reject("Canvas không được hỗ trợ");
+  const [typeLv1, setTypeLv1] = useState(listTab.tabs[1].value);
 
-          // Tính toán kích thước ảnh để không vượt quá maxSize
-          let { width, height } = img;
-          if (width > maxSize || height > maxSize) {
-            const scaleFactor = Math.min(maxSize / width, maxSize / height);
-            width = Math.round(width * scaleFactor);
-            height = Math.round(height * scaleFactor);
-          }
+  const subTabs = listTab.tabs
+    .map((tmp) => {
+      if (tmp.value !== typeLv1) {
+        return undefined;
+      }
 
-          canvas.width = width;
-          canvas.height = height;
-          ctx.drawImage(img, 0, 0, width, height);
+      if (tmp.children?.tabs.length === 0) {
+        return undefined;
+      }
 
-          // Chuyển sang WebP với chất lượng tối ưu
-          canvas.toBlob(
-            (blob) => {
-              if (blob) {
-                resolve(
-                  new File(
-                    [blob],
-                    file.name.replace(/\.(jpg|jpeg|png)$/i, ".webp"),
-                    { type: "image/webp" }
-                  )
-                );
-              } else {
-                reject("Không thể tạo blob từ ảnh");
-              }
-            },
-            "image/webp",
-            quality // Giảm chất lượng xuống mức phù hợp
-          );
-        };
-      };
-    });
-  }
+      return tmp;
+    })
+    .filter((tmp) => tmp)[0]?.children;
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -86,7 +55,7 @@ export default function ButtonAndForm({
             };
 
             const compressedFile = await imageCompression(file, options);
-            return convertToWebP(compressedFile, 0.7); // Giảm chất lượng
+            return convertToWebP(compressedFile, 0.85); // Giảm chất lượng
           })
         );
 
@@ -100,12 +69,14 @@ export default function ButtonAndForm({
   const uploadImagesToSupabase = async (
     files: File[],
     name: string,
-    type: string
+    typeLv1: string,
+    typeLv2: string
   ) => {
     try {
+      const pTypeLv2 = typeLv2 ? `/${typeLv2}` : "";
       const uploads = await Promise.all(
         files.map(async (file) => {
-          const fileName = `${typePage}/${type}/${name}-${Date.now()}-${
+          const fileName = `${typePage}/${typeLv1}${pTypeLv2}/${name}-${Date.now()}-${
             file.name
           }`;
 
@@ -133,7 +104,7 @@ export default function ButtonAndForm({
     <div>
       <div
         onClick={() => setOpenForm(true)}
-        className="group hover:bg-gray-300 transition-all w-full h-auto aspect-[3/2] cursor-pointer bg-gray-200 flex items-center justify-center"
+        className="group hover:bg-gray-300 transition-all w-full h-auto aspect-[3/2] cursor-pointer bg-gray-200 flex items-center justify-center rounded-lg"
       >
         <PlusIcon
           className="text-gray-400 group-hover:text-gray-500"
@@ -171,7 +142,8 @@ export default function ButtonAndForm({
                 const imageUrls = await uploadImagesToSupabase(
                   selectedFiles,
                   formData.get("name")?.toString() || "",
-                  formData.get("type")?.toString() || ""
+                  typeLv1 || "",
+                  formData.get("typeLv2")?.toString() || ""
                 );
 
                 if (!imageUrls) {
@@ -181,7 +153,7 @@ export default function ButtonAndForm({
                 }
 
                 formData.append("imageUrls", JSON.stringify(imageUrls));
-                const result = await InsertWedding(formData);
+                const result = await InsertWedding(formData, typePage);
                 setLoading(false);
 
                 if (result.status === "error") {
@@ -224,23 +196,42 @@ export default function ButtonAndForm({
                 />
               </div>
 
-              {typePage === "wedding" ? (
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Loại
+                </label>
+                <select
+                  name="typeLv1"
+                  value={typeLv1}
+                  onChange={(e) => setTypeLv1(e.target.value)}
+                  className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-black focus:ring-black"
+                >
+                  {listTab.tabs.slice(1).map((item) => (
+                    <option key={item.label} value={item.value}>
+                      {item.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {subTabs && (
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
-                    Loại
+                    Loại phụ
                   </label>
                   <select
-                    name="type"
+                    name="typeLv2"
                     className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-black focus:ring-black"
                   >
-                    <option value="studio">Studio</option>
-                    <option value="phimtruong">Phim Trường</option>
-                    <option value="ngoaicanh">Ngoại Cảnh</option>
+                    {subTabs.tabs.map((item) => (
+                      <option key={item.label} value={item.value}>
+                        {item.label}
+                      </option>
+                    ))}
                   </select>
                 </div>
-              ) : (
-                <input type="hidden" name="type" value="events" />
               )}
+
               {error && <p className="text-red-500 text-sm">{error}</p>}
               {success && (
                 <p className="text-green-500 text-sm">Tải lên thành công!</p>

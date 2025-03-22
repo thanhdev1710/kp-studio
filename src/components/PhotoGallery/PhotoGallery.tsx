@@ -1,7 +1,7 @@
 "use client";
 import { DeleteWedding } from "@/actions/wedding";
 import { Wedding } from "@/types/wedding";
-import { Trash } from "lucide-react";
+import { Lock, Trash } from "lucide-react";
 import Image from "next/image";
 import { ReactNode, useState } from "react";
 
@@ -9,10 +9,12 @@ export default function PhotoGallery({
   photos,
   children,
   isDelete = false,
+  typePage,
 }: {
   photos: Wedding[];
   children?: ReactNode;
   isDelete?: boolean;
+  typePage: string;
 }) {
   const [loadingDelete, setLoadingDelete] = useState<number | null>(null);
 
@@ -41,7 +43,7 @@ export default function PhotoGallery({
             <button
               onClick={async () => {
                 setLoadingDelete(item.id);
-                await DeleteWedding(item.id);
+                await DeleteWedding(item.id, typePage);
                 setLoadingDelete(null);
               }}
               className={`absolute top-2 right-2 bg-red-600 text-white p-2 rounded-full shadow-md transition-all ${
@@ -51,7 +53,11 @@ export default function PhotoGallery({
               }`}
               disabled={loadingDelete === item.id}
             >
-              {loadingDelete === item.id ? "..." : <Trash size={18} />}
+              {loadingDelete === item.id ? (
+                <Lock size={18} />
+              ) : (
+                <Trash size={18} />
+              )}
             </button>
           )}
         </div>

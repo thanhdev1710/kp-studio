@@ -11,4 +11,10 @@ export interface Wedding {
   blur_data: string;
 }
 
-export type TabType = "studio" | "phimtruong" | "ngoaicanh" | "events" | "all";
+export interface ListTab {
+  tabs: {
+    value: string;
+    label: string;
+    children?: ListTab;
+  }[];
+}
