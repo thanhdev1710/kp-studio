@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export function hello(req: NextRequest) {
+export function middleware(req: NextRequest) {
   const { searchParams } = req.nextUrl;
   const token =
     searchParams.get("token") || req.cookies.get("ACCESS_TOKEN")?.value; // Lấy token từ query hoặc cookies
