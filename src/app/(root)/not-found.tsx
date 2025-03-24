@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white text-center p-6">
+    <div className="fixed top-0 left-0 z-[100] w-full flex flex-col items-center justify-center min-h-screen bg-white text-center p-6">
       <h1 className="text-6xl font-bold text-gray-900 mb-4">404</h1>
       <h2 className="text-2xl text-gray-700 font-medium mb-6">
         Oops! Trang bạn tìm không tồn tại.

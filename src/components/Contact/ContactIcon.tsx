@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function ContactIcon() {
   return (
     <div className="flex space-x-4">

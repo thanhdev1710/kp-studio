@@ -55,3 +55,7 @@ export async function convertToWebP(
     };
   });
 }
+
+export function convertToEmbed(url: string) {
+  return url.replace("watch?v=", "embed/");
+}

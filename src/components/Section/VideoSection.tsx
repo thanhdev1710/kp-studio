@@ -1,16 +1,18 @@
+import { convertToEmbed } from "@/lib/utils";
+import { VideoType } from "@/types/videos";
 import React from "react";
 
-export default function VideoSection() {
+export default function VideoSection({ videos }: { videos: VideoType[] }) {
   return (
     <section>
       <div className="bg-gray-100 text-gray-900 py-12">
         <div className="container flex lg:flex-row flex-col justify-center gap-10 mx-auto px-4 md:px-6">
           <div className="w-full">
             <iframe
+              src={convertToEmbed(videos[0].url)}
+              title={videos[0].title}
               width="560"
               height="315"
-              src="https://www.youtube.com/embed/JUv_BSAfw5w?si=bsiP39M27_BvqBON"
-              title="YouTube video player"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerPolicy="strict-origin-when-cross-origin"
@@ -24,60 +26,36 @@ export default function VideoSection() {
             </h3>
             <div className="w-full h-0.5 bg-gray-200" />
             <p className="fontPlayfairDisplay font-medium italic md:text-2xl text-lg mt-4">
-              PRE WEDDING || Aloha x NCSG
+              {videos[0].title}
             </p>
             <p className="mt-4 text-gray-500 px-10 inline-block">
-              &quot;Ngoài kia có biết bao cám dỗ. Nhưng với anh, em vẫn là điều
-              quan trọng nhất.
-              <br />
-              Em biết vì sao không?
-              <br />
-              Vì em ở nơi nào, nơi đó chính là BÌNH YÊN&quot;.
+              {videos[0].content.split("\n").map((line, index) => (
+                <React.Fragment key={index}>
+                  {line}
+                  <br />
+                </React.Fragment>
+              ))}
             </p>
           </div>
         </div>
       </div>
       <div className="containerCustom py-6">
         <div className="grid lg:grid-cols-3 grid-cols-1 gap-6 p-3 bg-gray-100">
-          <div className="w-full">
-            <iframe
-              width="560"
-              height="315"
-              src="https://www.youtube.com/embed/JUv_BSAfw5w?si=bsiP39M27_BvqBON"
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-              className="w-full h-auto aspect-video"
-            ></iframe>
-          </div>
-          <div className="w-full">
-            <iframe
-              width="560"
-              height="315"
-              src="https://www.youtube.com/embed/JUv_BSAfw5w?si=bsiP39M27_BvqBON"
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-              className="w-full h-auto aspect-video"
-            ></iframe>
-          </div>
-          <div className="w-full">
-            <iframe
-              width="560"
-              height="315"
-              src="https://www.youtube.com/embed/JUv_BSAfw5w?si=bsiP39M27_BvqBON"
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-              className="w-full h-auto aspect-video"
-            ></iframe>
-          </div>
+          {videos.slice(1).map((video) => (
+            <div key={video.id} className="w-full">
+              <iframe
+                src={convertToEmbed(video.url)}
+                title={video.title}
+                width="560"
+                height="315"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                className="w-full h-auto aspect-video"
+              ></iframe>
+            </div>
+          ))}
         </div>
       </div>
     </section>

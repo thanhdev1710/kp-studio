@@ -12,8 +12,11 @@ export const listNavRoot = [
 
 export const listNavAdmin = [
   { title: "Admin", link: "/admin" },
+  { title: "Slides", link: "/admin/slides" },
+  { title: "Videos", link: "/admin/videos" },
   { title: "Wedding", link: "/admin/wedding" },
   { title: "Events", link: "/admin/events" },
+  { title: "Dịch vụ", link: "/admin/dich-vu" },
   { title: "Logout", link: "/api/logout" },
 ];
 
@@ -36,8 +39,8 @@ export const listTab: ListTab = {
       children: {
         tabs: [
           {
-            label: "Ngoại cảnh 1",
-            value: "ngoaicanh1",
+            label: "Phim trưởng",
+            value: "phimtruong",
           },
           {
             label: "Ngoại cảnh 2",

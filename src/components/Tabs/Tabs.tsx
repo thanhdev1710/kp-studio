@@ -1,6 +1,5 @@
 import { ListTab } from "@/types/wedding";
 import Link from "next/link";
-import React from "react";
 
 export default function Tabs({
   pathname,
@@ -13,11 +12,10 @@ export default function Tabs({
 }) {
   return (
     <div className="relative w-full border-b border-gray-300 pb-4 mb-4">
-      {/* Thêm padding để tránh che mất phần tử đầu tiên */}
       <div className="flex justify-start md:justify-center gap-4 overflow-x-auto px-4 pb-2 scroll-px-4 snap-x snap-mandatory">
         {tabs.map((tab) => (
           <Link
-            href={`${pathname}?type=${tab.value}`}
+            href={`${pathname}/${tab.value}`}
             key={tab.label}
             className={`relative px-3 py-1 md:px-6 md:py-2 md:text-lg text-sm font-medium tracking-wide transition-all duration-300 whitespace-nowrap snap-start ${
               type === tab.value

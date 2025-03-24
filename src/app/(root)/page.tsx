@@ -6,6 +6,7 @@ import PhotoPackageSection from "@/components/Section/PhotoPackageSection";
 import StepPhotoSection from "@/components/Section/StepPhotoSection";
 import VideoSection from "@/components/Section/VideoSection";
 import { blur } from "@/constants/base";
+import { getVideosHomePage } from "@/services/videos";
 import { Metadata } from "next";
 import React from "react";
 
@@ -13,7 +14,8 @@ export const metadata: Metadata = {
   title: "Trang chủ",
 };
 
-export default function Home() {
+export default async function Home() {
+  const videos = await getVideosHomePage();
   const listSlide = [
     { img: "/images/img1.jpg", blur },
     { img: "/images/img2.jpg", blur },
@@ -28,7 +30,7 @@ export default function Home() {
       <StepPhotoSection />
       <PhotoPackageSection />
       <AlbumSection />
-      <VideoSection />
+      <VideoSection videos={videos} />
       <MapsSection />
       <ContactSection />
     </div>

@@ -1,19 +1,23 @@
 "use client";
 import { ListTab } from "@/types/wedding";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function SubTabs({
-  pathname,
   listTab: { tabs },
   type,
 }: {
-  pathname: string;
   listTab: ListTab;
   type: string;
 }) {
+  const pathname = usePathname();
   const [selected, setSelected] = useState(type || tabs[0].value);
   const router = useRouter();
+
+  useEffect(() => {
+    router.replace(`${pathname}?subType=${tabs[0].value}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newType = event.target.value;
@@ -22,7 +26,7 @@ export default function SubTabs({
   };
 
   return (
-    <div className="flex justify-center mt-6">
+    <div className="flex justify-center my-6">
       <select
         value={selected}
         onChange={handleChange}
