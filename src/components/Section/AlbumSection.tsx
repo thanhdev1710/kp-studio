@@ -10,10 +10,6 @@ export default function AlbumSection() {
     "/images/img1.jpg",
     "/images/img2.jpg",
     "/images/img3.jpg",
-    "/images/img5.jpg",
-    "/images/img1.jpg",
-    "/images/img2.jpg",
-    "/images/img3.jpg",
   ];
   return (
     <section className="px-4 md:px-6 py-12">
@@ -24,7 +20,7 @@ export default function AlbumSection() {
           <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 h-0.5 bg-gray-700 transition-all duration-500 w-1/2"></span>
         </h3>
       </div>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4">
+      <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
         {listImg.map((img, i) => (
           <div
             key={img + i}

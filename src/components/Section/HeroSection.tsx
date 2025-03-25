@@ -11,7 +11,7 @@ import Link from "next/link";
 export default function HeroSection({
   listSlide,
 }: {
-  listSlide: { img: string; blur: string }[];
+  listSlide: { img: string; blur: string; url: string }[];
 }) {
   return (
     <Swiper
@@ -31,7 +31,7 @@ export default function HeroSection({
     >
       {listSlide.map((item) => (
         <SwiperSlide key={item.img}>
-          <Link href={"/dich-vu"}>
+          <Link href={item.url}>
             <Image
               alt="Wedding"
               className="w-full lg:aspect-[5/2] aspect-video h-auto object-cover select-none pointer-events-none cursor-pointer"

@@ -17,11 +17,11 @@ export const metadata: Metadata = {
 export default async function Home() {
   const videos = await getVideosHomePage();
   const listSlide = [
-    { img: "/images/img1.jpg", blur },
-    { img: "/images/img2.jpg", blur },
-    { img: "/images/img3.jpg", blur },
-    { img: "/images/img4.jpg", blur },
-    { img: "/images/img5.jpg", blur },
+    { img: "/images/img1.jpg", blur, url: "" },
+    { img: "/images/img2.jpg", blur, url: "" },
+    { img: "/images/img3.jpg", blur, url: "" },
+    { img: "/images/img4.jpg", blur, url: "" },
+    { img: "/images/img5.jpg", blur, url: "" },
   ];
 
   return (

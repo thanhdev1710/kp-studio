@@ -5,10 +5,8 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: "unpocxzsussyvmnipuhr.supabase.co",
         protocol: "https",
-        port: "",
-        pathname: "/storage/v1/object/public/images/**",
+        hostname: "**", // Cho phép tất cả các hostname
       },
     ],
   },
