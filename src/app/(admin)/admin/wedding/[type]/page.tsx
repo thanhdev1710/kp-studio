@@ -1,4 +1,3 @@
-import PhotoGallery from "@/components/PhotoGallery/PhotoGalleryV2";
 import ErrorComponent from "@/components/ErrorComponent";
 import { PhotoGallerySkeleton } from "@/components/Skeleton/PhotoGallerySkeleton";
 import Tabs from "@/components/Tabs/Tabs";
@@ -8,6 +7,8 @@ import { Suspense } from "react";
 import { listTab } from "@/constants/base";
 import SubTabs from "@/components/Tabs/SubTabs";
 import { notFound } from "next/navigation";
+import PhotoGalleryAndDelete from "@/components/PhotoGallery/PhotoGalleryAndDelete";
+import ButtonAndForm from "@/components/button/ButtonAndForm";
 
 export function generateStaticParams() {
   return listTab.tabs.map((e) => ({ type: e.value }));
@@ -65,5 +66,9 @@ export default async function page({
 
 async function FetchData({ type }: { type: string }) {
   const { data } = await getWeddingByType(type, "wedding");
-  return <PhotoGallery photos={data} />;
+  return (
+    <PhotoGalleryAndDelete typePage="wedding" photos={data}>
+      <ButtonAndForm listTab={listTab} typePage="wedding" />
+    </PhotoGalleryAndDelete>
+  );
 }

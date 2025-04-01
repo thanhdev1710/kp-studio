@@ -12,8 +12,8 @@ export const listNavRoot = [
 ];
 
 export const listNavAdmin = [
-  { title: "Admin", link: "/admin" },
   { title: "Trang chủ", link: "/admin/trang-chu" },
+  { title: "Khoảng khắc đẹp", link: "/admin/khoang-khac-dep" },
   { title: "Wedding", link: "/admin/wedding" },
   { title: "Events", link: "/admin/events" },
   { title: "Ảnh thời trang", link: "/admin/anh-thoi-trang" },
@@ -71,6 +71,10 @@ export const listTabEvent: ListTab = {
       label: "Tất cả",
       value: "all",
     },
+    {
+      label: "Sự kiện",
+      value: "sukien",
+    },
   ],
 };
 
@@ -91,6 +95,19 @@ export const listTabAnhThoiTrang: ListTab = {
     {
       label: "Trend",
       value: "trend",
+    },
+  ],
+};
+
+export const listTabKhoangKhacDep: ListTab = {
+  tabs: [
+    {
+      label: "Tất cả",
+      value: "all",
+    },
+    {
+      label: "Khoảng khắc",
+      value: "khoangkhac",
     },
   ],
 };

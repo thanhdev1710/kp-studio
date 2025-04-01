@@ -12,7 +12,7 @@ export default function ButtonAndForm({
   typePage,
   listTab,
 }: {
-  typePage: "wedding" | "events";
+  typePage: "wedding" | "events" | "anhthoitrang" | "khoangkhacdep";
   listTab: ListTab;
 }) {
   const [openForm, setOpenForm] = useState(false);

@@ -5,16 +5,14 @@ import { Lock, Trash } from "lucide-react";
 import Image from "next/image";
 import { ReactNode, useState } from "react";
 
-export default function PhotoGallery({
+export default function PhotoGalleryAndDelete({
   photos,
   children,
-  isDelete = false,
   typePage,
 }: {
   photos: Wedding[];
-  children?: ReactNode;
-  isDelete?: boolean;
   typePage: string;
+  children: ReactNode;
 }) {
   const [loadingDelete, setLoadingDelete] = useState<number | null>(null);
 
@@ -39,27 +37,26 @@ export default function PhotoGallery({
           />
 
           {/* Nút xóa */}
-          {isDelete && (
-            <button
-              onClick={async () => {
-                setLoadingDelete(item.id);
-                await DeleteWedding(item.id, typePage);
-                setLoadingDelete(null);
-              }}
-              className={`absolute top-2 right-2 bg-red-600 text-white p-2 rounded-full shadow-md transition-all ${
-                loadingDelete === item.id
-                  ? "cursor-not-allowed"
-                  : "hover:bg-red-700 cursor-pointer"
-              }`}
-              disabled={loadingDelete === item.id}
-            >
-              {loadingDelete === item.id ? (
-                <Lock size={18} />
-              ) : (
-                <Trash size={18} />
-              )}
-            </button>
-          )}
+
+          <button
+            onClick={async () => {
+              setLoadingDelete(item.id);
+              await DeleteWedding(item.id, typePage);
+              setLoadingDelete(null);
+            }}
+            className={`absolute top-2 right-2 bg-red-600 text-white p-2 rounded-full shadow-md transition-all ${
+              loadingDelete === item.id
+                ? "cursor-not-allowed"
+                : "hover:bg-red-700 cursor-pointer"
+            }`}
+            disabled={loadingDelete === item.id}
+          >
+            {loadingDelete === item.id ? (
+              <Lock size={18} />
+            ) : (
+              <Trash size={18} />
+            )}
+          </button>
         </div>
       ))}
     </div>

@@ -1,14 +1,15 @@
-// import AlbumSection from "@/components/Section/AlbumSection";
+import BeautifulMomentsSection from "@/components/Section/BeautifulMomentsSection";
 // import PhotoPackageSection from "@/components/Section/PhotoPackageSection";
 import { ContactSection } from "@/components/Section/ContactSection";
 import HeroSection from "@/components/Section/HeroSection";
+import InspirationSection from "@/components/Section/InspirationSection";
 import MapsSection from "@/components/Section/MapsSection";
 import StepPhotoSection from "@/components/Section/StepPhotoSection";
 import VideoSection from "@/components/Section/VideoSection";
 import { blur } from "@/constants/base";
 import { getVideosHomePage } from "@/services/videos";
 import { Metadata } from "next";
-import React from "react";
+import React, { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Trang chủ",
@@ -28,8 +29,11 @@ export default async function Home() {
     <div>
       <HeroSection listSlide={listSlide} />
       <StepPhotoSection />
-      {/* <PhotoPackageSection />
-      <AlbumSection /> */}
+      {/* <PhotoPackageSection /> */}
+      <InspirationSection />
+      <Suspense>
+        <BeautifulMomentsSection />
+      </Suspense>
       <VideoSection videos={videos} />
       <MapsSection />
       <ContactSection />

@@ -30,7 +30,7 @@ export default async function page({
   const { subType } = await searchParams;
 
   // rieng event all
-  if (listTabEvent.tabs.findIndex((tab) => tab.value === type) === -1) {
+  if (tabs.findIndex((tab) => tab.value === type) === -1) {
     return notFound();
   }
 

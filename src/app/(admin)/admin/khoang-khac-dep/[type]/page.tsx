@@ -5,7 +5,7 @@ import { getWeddingByType } from "@/services/wedding";
 import { Metadata } from "next";
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import { Suspense } from "react";
-import { listTabAnhThoiTrang } from "@/constants/base";
+import { listTabKhoangKhacDep } from "@/constants/base";
 import SubTabs from "@/components/Tabs/SubTabs";
 import { notFound } from "next/navigation";
 import PhotoGalleryAndDelete from "@/components/PhotoGallery/PhotoGalleryAndDelete";
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 export function generateStaticParams() {
-  return listTabAnhThoiTrang.tabs.map((e) => ({ type: e.value }));
+  return listTabKhoangKhacDep.tabs.map((e) => ({ type: e.value }));
 }
 
 export default async function page({
@@ -26,7 +26,7 @@ export default async function page({
   params: Promise<{ type: string }>;
   searchParams: Promise<{ subType: string }>;
 }) {
-  const tabs = listTabAnhThoiTrang.tabs;
+  const tabs = listTabKhoangKhacDep.tabs;
   const { type } = await params;
   const { subType } = await searchParams;
 
@@ -34,7 +34,7 @@ export default async function page({
     return notFound();
   }
 
-  const subTabs = listTabAnhThoiTrang.tabs
+  const subTabs = listTabKhoangKhacDep.tabs
     .map((tmp) => {
       if (tmp.value !== type) {
         return undefined;
@@ -58,7 +58,7 @@ export default async function page({
 
   return (
     <div className="containerCustom fontMontserrat py-12">
-      <Tabs pathname="/admin/anh-thoi-trang" listTab={{ tabs }} type={type} />
+      <Tabs pathname="/admin/khoang-khac-dep" listTab={{ tabs }} type={type} />
       {subTabs && <SubTabs listTab={subTabs} type={type} />}
       <ErrorBoundary errorComponent={ErrorComponent}>
         <Suspense key={subType || type} fallback={<PhotoGallerySkeleton />}>
@@ -70,10 +70,10 @@ export default async function page({
 }
 
 async function FetchData({ type }: { type: string }) {
-  const { data } = await getWeddingByType(type, "anhthoitrang");
+  const { data } = await getWeddingByType(type, "khoangkhacdep");
   return (
-    <PhotoGalleryAndDelete typePage="anhthoitrang" photos={data}>
-      <ButtonAndForm listTab={listTabAnhThoiTrang} typePage="anhthoitrang" />
+    <PhotoGalleryAndDelete typePage="khoangkhacdep" photos={data}>
+      <ButtonAndForm listTab={listTabKhoangKhacDep} typePage="khoangkhacdep" />
     </PhotoGalleryAndDelete>
   );
 }
