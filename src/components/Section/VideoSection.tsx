@@ -1,8 +1,9 @@
 import { convertToEmbed } from "@/lib/utils";
-import { VideoType } from "@/types/videos";
+import { getVideosHomePage } from "@/services/videos";
 import React from "react";
 
-export default function VideoSection({ videos }: { videos: VideoType[] }) {
+export default async function VideoSection() {
+  const videos = await getVideosHomePage();
   return (
     <section>
       <div className="bg-gray-100 text-gray-900 py-12">

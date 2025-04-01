@@ -6,8 +6,10 @@ import InspirationSection from "@/components/Section/InspirationSection";
 import MapsSection from "@/components/Section/MapsSection";
 import StepPhotoSection from "@/components/Section/StepPhotoSection";
 import VideoSection from "@/components/Section/VideoSection";
-import { blur } from "@/constants/base";
-import { getVideosHomePage } from "@/services/videos";
+import BeautifulMomentsSectionSkeleton from "@/components/Skeleton/BeautifulMomentsSectionSkeleton";
+import InspirationSectionSkeleton from "@/components/Skeleton/InspirationSectionSkeleton";
+import VideoSectionSkeleton from "@/components/Skeleton/VideoSectionSkeleton";
+import { getHeroSection } from "@/services/heroSection";
 import { Metadata } from "next";
 import React, { Suspense } from "react";
 
@@ -16,25 +18,22 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const videos = await getVideosHomePage();
-  const listSlide = [
-    { img: "/images/img1.jpg", blur, url: "" },
-    { img: "/images/img2.jpg", blur, url: "" },
-    { img: "/images/img3.jpg", blur, url: "" },
-    { img: "/images/img4.jpg", blur, url: "" },
-    { img: "/images/img5.jpg", blur, url: "" },
-  ];
+  const listSlide = await getHeroSection();
 
   return (
     <div>
       <HeroSection listSlide={listSlide} />
       <StepPhotoSection />
       {/* <PhotoPackageSection /> */}
-      <InspirationSection />
-      <Suspense>
+      <Suspense fallback={<InspirationSectionSkeleton />}>
+        <InspirationSection />
+      </Suspense>
+      <Suspense fallback={<BeautifulMomentsSectionSkeleton />}>
         <BeautifulMomentsSection />
       </Suspense>
-      <VideoSection videos={videos} />
+      <Suspense fallback={<VideoSectionSkeleton />}>
+        <VideoSection />
+      </Suspense>
       <MapsSection />
       <ContactSection />
     </div>

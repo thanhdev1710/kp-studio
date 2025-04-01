@@ -16,7 +16,7 @@ export default function ErrorComponent({
       </p>
       {reset && (
         <button
-          onClick={reset}
+          onClick={() => window.location.reload()}
           className="mt-4 px-6 py-3 bg-blue-600 text-white font-medium hover:bg-blue-700 transition duration-300"
         >
           Thử lại

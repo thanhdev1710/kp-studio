@@ -21,9 +21,6 @@ export const listNavAdmin = [
   { title: "Logout", link: "/api/logout" },
 ];
 
-export const blur =
-  "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDUwMCAzMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjUwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiNiYmJiYmIiLz48L3N2Zz4=";
-
 export const listTab: ListTab = {
   tabs: [
     {
@@ -108,6 +105,10 @@ export const listTabKhoangKhacDep: ListTab = {
     {
       label: "Khoảng khắc",
       value: "khoangkhac",
+    },
+    {
+      label: "Góc Cảm Hứng",
+      value: "goccamhung",
     },
   ],
 };
