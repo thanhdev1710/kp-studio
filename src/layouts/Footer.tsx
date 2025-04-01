@@ -1,5 +1,5 @@
+import ContactIcon from "@/components/Contact/ContactIcon";
 import Logo from "@/components/Logo";
-import { ContactIcon } from "lucide-react";
 
 export function Footer({
   listNav,
