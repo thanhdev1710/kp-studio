@@ -5,7 +5,8 @@ export const listNavRoot = [
   { title: "Giới thiệu", link: "/gioi-thieu" },
   { title: "Wedding", link: "/wedding" },
   { title: "Events", link: "/events" },
-  { title: "Tin tức", link: "/tin-tuc" },
+  { title: "Ảnh thời trang", link: "/anh-thoi-trang" },
+  // { title: "Tin tức", link: "/tin-tuc" },
   { title: "Liên hệ", link: "/lien-he" },
   { title: "Dịch vụ", link: "/dich-vu" },
 ];
@@ -15,6 +16,7 @@ export const listNavAdmin = [
   { title: "Trang chủ", link: "/admin/trang-chu" },
   { title: "Wedding", link: "/admin/wedding" },
   { title: "Events", link: "/admin/events" },
+  { title: "Ảnh thời trang", link: "/admin/anh-thoi-trang" },
   { title: "Dịch vụ", link: "/admin/dich-vu" },
   { title: "Logout", link: "/api/logout" },
 ];
@@ -69,13 +71,26 @@ export const listTabEvent: ListTab = {
       label: "Tất cả",
       value: "all",
     },
+  ],
+};
+
+export const listTabAnhThoiTrang: ListTab = {
+  tabs: [
     {
-      label: "Events 1",
-      value: "events1",
+      label: "Tất cả",
+      value: "all",
     },
     {
-      label: "Events 2",
-      value: "events2",
+      label: "Chân dung",
+      value: "chandung",
+    },
+    {
+      label: "Concept",
+      value: "concept",
+    },
+    {
+      label: "Trend",
+      value: "trend",
     },
   ],
 };

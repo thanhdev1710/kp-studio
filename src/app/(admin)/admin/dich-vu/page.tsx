@@ -1,8 +1,9 @@
+import { addService, deleteService, updateService } from "@/actions/dichvu";
 import ButtonAction from "@/components/button/ButtonAction";
-import { services } from "@/constants/base";
+import { getServices } from "@/services/dichVu";
 // TODO: code backend
-export default function Page() {
-  const data = services;
+export default async function Page() {
+  const data = await getServices();
 
   return (
     <div className="containerCustom py-12">
@@ -19,7 +20,10 @@ export default function Page() {
         </div>
 
         {/* Form thêm mới */}
-        <form className="grid grid-cols-4 items-center gap-2 p-3 border rounded-md shadow-sm">
+        <form
+          action={addService}
+          className="grid grid-cols-4 items-center gap-2 p-3 border rounded-md shadow-sm"
+        >
           <input
             type="text"
             name="name"
@@ -50,7 +54,10 @@ export default function Page() {
             key={service.id}
             className="grid grid-cols-[80%_20%] items-center gap-2 p-3 border rounded-md shadow-sm"
           >
-            <form className="grid grid-cols-4 gap-2 items-center">
+            <form
+              action={updateService}
+              className="grid grid-cols-4 gap-2 items-center"
+            >
               <input
                 type="text"
                 name="name"
@@ -73,7 +80,7 @@ export default function Page() {
               <ButtonAction title="Lưu" titleLoading="Chờ..." type="edit" />
             </form>
 
-            <form>
+            <form action={deleteService}>
               <input name="id" type="hidden" defaultValue={service.id} />
               <ButtonAction title="Xoá" titleLoading="Chờ..." type="delete" />
             </form>

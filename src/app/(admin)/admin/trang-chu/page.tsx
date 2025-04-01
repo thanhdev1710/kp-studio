@@ -3,7 +3,7 @@ import AdminVideoSection from "@/components/admin/videos/AdminVideoSection";
 
 export default function page() {
   return (
-    <div>
+    <div className="">
       <AdminHeroSection />
       <AdminVideoSection />
     </div>

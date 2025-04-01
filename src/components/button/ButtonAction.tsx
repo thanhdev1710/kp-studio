@@ -14,9 +14,9 @@ export default function ButtonAction({
   const { pending } = useFormStatus();
 
   const typeColors = {
-    delete: "bg-red-500 hover:bg-red-700",
-    add: "bg-green-500 hover:bg-green-700",
-    edit: "bg-blue-500 hover:bg-blue-700",
+    delete: "bg-red-500 hover:bg-red-700 disabled:bg-red-700",
+    add: "bg-green-500 hover:bg-green-700 disabled:bg-green-700",
+    edit: "bg-blue-500 hover:bg-blue-700 disabled:bg-blue-700",
   };
 
   return (
