@@ -1,8 +1,8 @@
-import AlbumSection from "@/components/Section/AlbumSection";
+// import AlbumSection from "@/components/Section/AlbumSection";
+// import PhotoPackageSection from "@/components/Section/PhotoPackageSection";
 import { ContactSection } from "@/components/Section/ContactSection";
 import HeroSection from "@/components/Section/HeroSection";
 import MapsSection from "@/components/Section/MapsSection";
-import PhotoPackageSection from "@/components/Section/PhotoPackageSection";
 import StepPhotoSection from "@/components/Section/StepPhotoSection";
 import VideoSection from "@/components/Section/VideoSection";
 import { blur } from "@/constants/base";
@@ -28,8 +28,8 @@ export default async function Home() {
     <div>
       <HeroSection listSlide={listSlide} />
       <StepPhotoSection />
-      <PhotoPackageSection />
-      <AlbumSection />
+      {/* <PhotoPackageSection />
+      <AlbumSection /> */}
       <VideoSection videos={videos} />
       <MapsSection />
       <ContactSection />

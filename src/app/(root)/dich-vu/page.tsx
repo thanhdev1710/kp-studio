@@ -1,4 +1,4 @@
-import { services } from "@/constants/base";
+import { getServices } from "@/services/dichVu";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -9,7 +9,8 @@ export const metadata: Metadata = {
     "bảng giá chụp ảnh cưới, dịch vụ chụp ảnh cưới, KP Studio, chụp ảnh cưới chuyên nghiệp",
 };
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const services = await getServices();
   return (
     <div className="containerCustom py-12">
       <h1 className="text-5xl font-extrabold text-gray-900 text-center mb-8">
