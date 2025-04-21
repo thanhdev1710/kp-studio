@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# KP Studio – Chụp Ảnh Cưới Nghệ Thuật
 
-## Getting Started
+**KP Studio** là studio chụp ảnh cưới chuyên nghiệp, mang phong cách hiện đại và sáng tạo. Chúng tôi giúp lưu giữ những khoảnh khắc hạnh phúc nhất cho các cặp đôi qua những bức ảnh nghệ thuật đầy cảm xúc.
 
-First, run the development server:
+## 💡 Giới thiệu Dự Án
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Website KP Studio là nền tảng trực tuyến được phát triển bằng **Next.js**, hỗ trợ người dùng:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Khám phá album ảnh cưới mẫu
+- Đặt lịch chụp ảnh nhanh chóng
+- Nhận tư vấn và phản hồi qua biểu mẫu
+- Trải nghiệm giao diện đẹp, tốc độ nhanh, tương thích tốt trên thiết bị di động
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🧰 Công Nghệ Sử Dụng
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Công nghệ                     | Mô tả                                      |
+| ----------------------------- | ------------------------------------------ |
+| **Next.js 15**                | Framework hiện đại cho SSR và tối ưu SEO   |
+| **Tailwind CSS 4**            | Thiết kế UI linh hoạt và hiệu quả          |
+| **Supabase**                  | Backend với database & xác thực người dùng |
+| **Ant Design**                | Bộ UI component chuyên nghiệp              |
+| **Swiper.js**                 | Tạo slideshow ảnh mượt mà                  |
+| **Lucide React**              | Icon SVG hiện đại                          |
+| **Sharp**                     | Tối ưu và xử lý ảnh server-side            |
+| **Nodemailer**                | Gửi email tự động trong biểu mẫu liên hệ   |
+| **Browser Image Compression** | Nén ảnh trước khi tải lên                  |
 
-## Learn More
+## 🌐 Website chính thức
 
-To learn more about Next.js, take a look at the following resources:
+👉 [https://kpstudio.vn](https://kpstudio.vn)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 👥 Tác Giả
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **ThanhDev** – [https://thanhdev.io.vn](https://thanhdev.io.vn)
+- **KP Studio** – [https://kpstudio.vn](https://kpstudio.vn)
 
-## Deploy on Vercel
+## 📝 Giấy Phép
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Dự án được phát hành theo giấy phép **MIT**. Xem chi tiết tại [LICENSE](./LICENSE).
